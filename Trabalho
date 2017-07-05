@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <ctype.h>
+
+ int q = 0
+ char max[30];
+
+
+struct no{
+	
+    int quantia= 0;
+    char dado[30];
+    struct no*dir;
+    struct no*esq;
+    
+};
+
+struct no *arvore = 0;
+
+ void inicia(){
+    int i;
+    for(i=0; i<tam;i++){
+        arvore[i].usado = 0;
+    }
+}
+
+ void insere(int valor){
+    int atual = 0;
+    while( atual < tam && arvore [atual].usado!=0){
+        if(valor < arvore[atual].dado) atual=2*atual+1;
+        else atual = 2*atual+2;
+    }
+    if(atual < tam){
+        arvore[atual].dado = valor;
+        arvore[atual].usado = 1;
+    } else printf("Não foi possível inserir!");
+}
+
+ void insereArvore (int valor){
+    int atual = 0;
+    while (atual != NULL){
+        if(strcmp(valor, arvore[atual].dado) == 0){
+           atual-> contador ++;
+           delete(aux);
+           return;
+        }
+    }
+    while( atual < tam && arvore [atual].usado!=0){
+        if(valor < arvore[atual].dado) atual=2*atual+1;
+        else atual = 2*atual+2;
+    }
+    if(atual < tam ){
+        arvore[atual].dado = valor;
+        arvore[atual].usado = 1;
+    } else printf("Não foi possível inserir!");
+}
+
+ void em_Ordem(struct no* atual){
+    if(atual!=0){
+        em_Ordem(2*atual+1);
+        printf("%d", arvore[atual].dado);
+        emOrdem(2*atual+2);
+    }
+}
+
+int main(){
+
+    char word[30];
+    char letter;
+    int i;
+    i = 0;
+    
+   setlocale (LC_ALL,"portuguese");
+    FILE *fp;
+    fp = fopen("c:\\texto.txt", "r");
+    
+    if (fp == NULL) {
+        printf("algo deu errado :( )");
+        return 0;
+    }
+    printf("Seu texto foi inserido :\n\n");
+    while (!feof(fp)) {
+       
+        fscanf(fp, "%c", &letter);
+        if (isalpha(letter)) {       //retorna um valor diferente de zero se c for uma letra ou retorna 0 caso contrario//
+            while (isalpha(letter)) {
+                printf("%c", letter);
+                palavra[i] = tolower(letter);
+                fscanf(fp, "%c", &letter);
+                i++;
+            }
+            printf("\n");
+            palavra[i] = '\0';
+            insereArvore(word);
+        }
+    }
+    printf(" Palavras Ordenadas:\n\n");
+    fclose(fp);
+    em_Ordem(raiz);
+    printf("\n\nA palavra que apareceu mais em seu texto foi : %s\nSomando um total de %d vezes\n", maior, qtd);
+}
